@@ -13,17 +13,43 @@ late List<CameraDescription> cameras;
    final cameras = await availableCameras();
    final firstCamera = cameras.first;
 
-   runApp(
-     MaterialApp(
-         theme: ThemeData.dark(),
-         home: MyApp()),
-   );
+
+   // runApp(
+   //   MaterialApp(
+   //       theme: ThemeData.dark(),
+   //    //   home: MyApp()),
+   // )
+   // );
+   runApp(MaterialApp(
+
+     title: 'Flutter camera example',
+     theme: ThemeData(
+       // This is the theme of your application.
+       //
+       // Try running your application with "flutter run". You'll see the
+       // application has a blue toolbar. Then, without quitting the app, try
+       // changing the primarySwatch below to Colors.green and then invoke
+       // "hot reload" (press "r" in the console where you ran "flutter run",
+       // or simply save your changes to "hot reload" in a Flutter IDE).
+       // Notice that the counter didn't reset back to zero; the application
+       // is not restarted.
+       primarySwatch: Colors.deepPurple,
+     ),
+
+     home: const MyHomePage(
+         title: 'Flutter camera example Home Page'),
+
+   ));
  }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  //const MyApp({super.key});
 
-  // This widget is the root of your application.
+  const MyApp({Key? key, required this.imagePath})
+      : super(key: key);
+
+  final String imagePath;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,24 +72,19 @@ class MyApp extends StatelessWidget {
       )
      */
 
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(
-          title: 'Flutter Demo Home Page'),
+
+
+      //  home:MyHomePage(camera: camera),
 
     );
   }
+
+
+  /*
+  // This widget is the root of your application.
+
+
+   */
 }
 
 class MyHomePage extends StatefulWidget {
@@ -87,6 +108,11 @@ class MyHomePage extends StatefulWidget {
 //(_cameras[0], ResolutionPreset.max);
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  //const _MyHomePageState({Key? key, required this.imagePath});
+
+  late final String imagePath;
+
   XFile? _image;
   CameraController? _controller;
   final imagePicker = ImagePicker();
@@ -102,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         cameras[0],
         ResolutionPreset.max);
 
-    if(_controller == null){return;}
+    //if(_controller == null){return;}
     _controller?.initialize().then((_) {
       if (!mounted) {
         return;
@@ -130,10 +156,13 @@ class _MyHomePageState extends State<MyHomePage> {
   // ギャラリーから写真を取得するメソッド
   Future getPhotoFromGarally() async {
     final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+
     setState(() {
+      /*
       if (pickedFile != null) {
         _image = XFile(pickedFile.path);
       }
+       */
     });
   }
 
@@ -147,10 +176,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // 取得した画像を表示(ない場合はメッセージ)
             child: _controller == null
                 ? Text(
-              '写真を選択してください',
-              style: Theme.of(context).textTheme.headline4,
+              '写真の取得方法を選択',
+              style: Theme.of(context).textTheme.headline5,
             )
-                : Image.file(File(_image!.path))),
+                : Image.file(File(imagePath))),
         floatingActionButton:
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           // カメラから取得するボタン
