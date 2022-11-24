@@ -1,6 +1,8 @@
-# camera_practice1
+# camera_practice
 
 A new Flutter project.
+
+training for 「camera」 and 「image_picker」
 
 ## Getting Started
 
