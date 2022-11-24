@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 
   const MyApp({Key? key, required this.imagePath})
       : super(key: key);
-
+  
   final String imagePath;
 
   @override
